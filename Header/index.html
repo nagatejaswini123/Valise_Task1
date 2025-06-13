@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Takeoff Upskill Navbar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f8f9fa;
+    }
+
+    nav.navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .logo {
+      flex: 1;
+    }
+
+    .logo img {
+      height: 60px;
+      width: 250px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+    }
+
+    .menu-wrapper {
+      flex: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    ul.menu {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      position: relative;
+    }
+
+    ul.menu li {
+      position: relative;
+    }
+
+    ul.menu a {
+      text-decoration: none;
+      color: black;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .dropdown > a::after {
+      content: " ▼";
+      font-size: 0.6em;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px 0;
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 100;
+      list-style:none;
+      text-align:center;
+    }
+
+    .dropdown-menu li {
+      padding: 8px 20px;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu li:hover {
+      background-color: #f0f0f0;
+    }
+
+    .search-bar {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .search-bar input[type="text"] {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .show {
+      display: block !important;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu-wrapper {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+      }
+
+      .menu-wrapper.active {
+        display: flex;
+      }
+
+      ul.menu {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 0;
+        align-items: center;
+      }
+
+      .dropdown-menu {
+        position: relative;
+        top: 0;
+        box-shadow: none;
+        border: none;
+        margin-top: 5px;
+      }
+
+      .search-bar {
+        width: 100%;
+        margin-top: 10px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><img src="logo.jpg" alt="Logo"></div>
+
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="menu-wrapper" id="menuWrapper">
+      <ul class="menu">
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">ABOUT US</a></li>
+
+        <li class="dropdown">
+          <a href="#" onclick="toggleDropdown(event, 'coursesDropdown')">COURSES</a>
+          <ul class="dropdown-menu" id="coursesDropdown">
+            <li><a href="#">MS-Office</a></li>
+            <li><a href="#">C</a></li>
+            <li><a href="#">C++</a></li>
+            <li><a href="#">Full Stack Java</a></li>
+            <li><a href="#">Full Stack Python</a></li>
+            <li><a href="#">Data Science</a></li>
+            <li><a href="#">Digital Marketing</a></li>
+            <li><a href="#">Data Analytics</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Java Programming</a></li>
+            <li><a href="#">Python Course</a></li>
+            <li><a href="#">SQL Course</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" onclick="toggleDropdown(event, 'internshipDropdown')">INTERNSHIP</a>
+          <ul class="dropdown-menu" id="internshipDropdown">
+            <li><a href="#">VLSI</a></li>
+            <li><a href="#">Embedded</a></li>
+            <li><a href="#">MATLAB</a></li>
+            <li><a href="#">CSE</a></li>
+            <li><a href="#">EEE</a></li>
+            <li><a href="#">Digital Marketing</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">PLACEMENT</a></li>
+        <li><a href="#">BLOGS</a></li>
+        <li><a href="#">CONTACT</a></li>
+        <li><a href="#">CAREER</a></li>
+      </ul>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+    </div>
+  </nav>
+
+  <script>
+    function toggleDropdown(event, id) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Close all other dropdowns
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        if (menu.id !== id) menu.classList.remove('show');
+      });
+
+      // Toggle selected dropdown
+      const dropdown = document.getElementById(id);
+      dropdown.classList.toggle('show');
+    }
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', function () {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+    });
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('menuWrapper');
+      menu.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
